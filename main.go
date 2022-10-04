@@ -38,12 +38,14 @@ func main() {
 			req, err := http.NewRequest("GET", urls, nil)
 			if err != nil {
 				// handle err
+				fmt.Println("Request error")
 			}
 			req.Header.Set("User-Agent", "NikkoBot")
 
 			resp, err := http.DefaultClient.Do(req)
 			if err != nil {
 				// handle err
+				fmt.Println("Response error")
 			}
 			resp_page, _ := ioutil.ReadAll(resp.Body)
 			str_rp_page := string(resp_page)
