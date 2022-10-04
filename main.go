@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+  "os"
 	"io/ioutil"
 	"net/http"
 	"os/exec"
@@ -11,7 +12,14 @@ import (
 
 func main() {
 
-	// loop page 2-10
+  if _, err := os.Stat("./plugins"); os.IsNotExist(err) {
+    fmt.Println("Error: directory \"plugins\" does not exist. Creating it ...")
+	os.Mkdir("./plugins", os.ModePerm)
+  } else if _, err := os.Stat("./extractedplugins"); os.IsNotExist(err) {
+    fmt.Println("Error: directory \"extractedplugins\" does not exist. Creating it ...")
+	os.Mkdir("./extractedplugins", os.ModePerm)
+  }	
+  // loop page 2-10
 	for i := 2; i < 10; i++ {
 		url := fmt.Sprintf("https://wordpress.org/plugins/browse/popular/page/%d/", i)
 		req, err := http.NewRequest("GET", url, nil)
@@ -78,4 +86,3 @@ func main() {
 
 }
 
-// no comment
