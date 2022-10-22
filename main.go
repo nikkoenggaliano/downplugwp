@@ -2,23 +2,23 @@ package main
 
 import (
 	"fmt"
-  "os"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"os/exec"
 	"regexp"
 	"strings"
 )
 
 func main() {
-  
-  if _, err := os.Stat("./plugins"); os.IsNotExist(err) {
-    fmt.Println("Error: directory \"plugins\" does not exist. Creating it ...")
-	  os.Mkdir("./plugins", os.ModePerm)
-  } else if _, err := os.Stat("./extractedplugins"); os.IsNotExist(err) {
-    fmt.Println("Error: directory \"extractedplugins\" does not exist. Creating it ...")
-	  os.Mkdir("./extractedplugins", os.ModePerm)
-  }	
+
+	if _, err := os.Stat("./plugins"); os.IsNotExist(err) {
+		fmt.Println("Error: directory \"plugins\" does not exist. Creating it ...")
+		os.Mkdir("./plugins", os.ModePerm)
+	} else if _, err := os.Stat("./extractedplugins"); os.IsNotExist(err) {
+		fmt.Println("Error: directory \"extractedplugins\" does not exist. Creating it ...")
+		os.Mkdir("./extractedplugins", os.ModePerm)
+	}
 
 	// loop page 2-10
 	for i := 2; i < 10; i++ {
@@ -26,12 +26,14 @@ func main() {
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
 			// handle err
+			fmt.Println("Request error")
 		}
 		req.Header.Set("User-Agent", "NikkoBot")
 
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
 			// handle err
+			fmt.Println("Response error")
 		}
 
 		defer resp.Body.Close()
@@ -66,12 +68,14 @@ func main() {
 				req, err := http.NewRequest("GET", url_downloads, nil)
 				if err != nil {
 					// handle err
+					fmt.Println("Request error")
 				}
 				req.Header.Set("User-Agent", "NikkoBot")
 
 				resp, err := http.DefaultClient.Do(req)
 				if err != nil {
 					// handle err
+					fmt.Println("Response error")
 				}
 				defer resp.Body.Close()
 				resp_downloads, _ := ioutil.ReadAll(resp.Body)
